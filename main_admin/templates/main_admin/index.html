@@ -46,18 +46,37 @@
         <button id="edit" type="submit" ><i class="fa-solid fa-edit"></i> Редактировать</button>
     </a>
 
-<!--    <form method="POST" action="{% url 'reset_queues' %}">-->
-<!--        {% csrf_token %}-->
-<!--    </form>-->
-    <button id="reload" type="submit" ><i class="fa-solid fa-arrows-rotate"></i> Сброс таблицы</button>
+   <!-- <form method="POST" action="{% url 'reset_queues' %}">
+       {% csrf_token %}
+   </form> -->
+
+    <button id="reload"><i class="fa-solid fa-arrows-rotate"></i> Сброс таблицы</button>
     <div id="myModal" class="modal">
-        <div class="modalContent">
+        <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Код подтверждения</h3>
+            <h3>Введите код подтверждения</h3>
+            <form method="POST" action="{% url 'reset_queues' %}">
+                {% csrf_token %}
+                <input id="enterCode" type="text" placeholder="Код">
+            </form>
         </div>
     </div>
 <script>
+    var modal = document.getElementById("myModal");
+    var btn = document.getElementById("reload");
+    var span = document.getElementsByClassName("close")[0];
 
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+    window.onclick = function () {
+        if(event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
 </script>
 
     <a href="{% url 'add_to_queue' %}">
