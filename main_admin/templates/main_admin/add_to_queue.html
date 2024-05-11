@@ -1,0 +1,41 @@
+<!--main_admin\add_to_queue.html-->
+{% load static %}
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://kit.fontawesome.com/df08f4fc0e.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main_admin\css\add_to_queue.css' %}">
+  <title>Add in queue</title>
+  <style>
+
+  </style>
+</head>
+<body>
+  <h1>Добавить в очередь</h1>
+  <form method="POST" action="{% url 'save_data' %}">
+      {% csrf_token %}
+      <div>
+          <div class="input">
+              <input required type="text" name="last_name" placeholder="Фамилия">
+          </div>
+          <div class="input">
+              <input required type="text" name="first_name" placeholder="Имя">
+          </div>
+          <div class="input">
+              <input type="text" name="middle_name" placeholder="Отчество">
+          </div>
+          <div class="input">
+              <select name="affiliation" class="custom-select">
+                  <option><i class="fa-solid fa-chevron-down"></i>Университет</option>
+                  <option>Колледж<i class="fa-solid fa-chevron-down"></i></option>
+              </select>
+          </div>
+      </div>
+      <button id="add" type="submit"><i class="fa-solid fa-user-plus"></i> Добавить</button>
+    </form>
+  <a href="{% url 'admin_page' %}"><button id="cancel"><i class="fa-solid fa-xmark"></i> Отмена</button></a>
+
+
+</body>
+</html>

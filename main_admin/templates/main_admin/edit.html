@@ -1,0 +1,111 @@
+<!--main_admin\edit.html-->
+{% load static %}
+
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'main_admin\css\edit.css' %}">
+
+  <title>Editing</title>
+</head>
+<body>
+    <span id="lable">
+        <h1>Редактирование очереди</h1>
+    </span>
+    <form id="editingForm" method="POST" action="{% url 'editing' %}">
+        {% csrf_token %}
+        <div>
+            <div class="input" id="first_input">
+                <input required type="text" name="ID" placeholder="ID">
+            </div>
+            <div class="input">
+                <input required type="text" name="last_name" placeholder="Фамилия">
+            </div>
+            <div class="input">
+                <input required type="text" name="first_name" placeholder="Имя">
+            </div>
+            <div class="input">
+                <input type="text" name="middle_name" placeholder="Отчество">
+            </div>
+        </div>
+        <button id="edit" type="submit">Изменить</button>
+    </form>
+
+        <div id="switch">
+          <button id="editing">Редактирование</button>
+          <button id="delete">Удаление</button>
+        </div>
+    
+    <a href="{% url 'admin_page' %}"><button id="cancel">Отмена</button></a>
+<script src="{% static 'main_admin/js/switch.js' %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+
+        var button = document.getElementById("delete");
+        var form = document.getElementById("editingForm");
+        var btn2 = document.getElementById('editing');
+
+        button.addEventListener("click", function() {
+        // Применяем стили напрямую к кнопке
+        button.style.backgroundColor = "#1d6ea3"; // Например, устанавливаем красный цвет фона
+        button.style.color = "white"; // Устанавливаем белый цвет текста
+//        button.style.z-index = '1';
+
+        // Применяем стили напрямую к кнопке btn2
+        btn2.style.backgroundColor = "#fff"; // Например, устанавливаем синий цвет фона
+        btn2.style.color = "#000"; // Устанавливаем белый цвет текста
+//        btn2.style.z-index = '0';
+
+        // Заменяем содержимое формы
+        form.innerHTML = `
+            {% csrf_token %}
+            <div class="input" id="first_input">
+                <input required type="text" name="queue_id" placeholder="Номер участника">
+            </div>
+            <button id="edit" type="submit">Удалить</button>
+        `;
+        // Устанавливаем атрибут action для формы
+        form.action = "{% url 'deleting' %}";
+        console.log("Кнопка была нажата!");
+    });
+    btn2.addEventListener("click", function() {
+        // Применяем стили напрямую к кнопке
+        btn2.style.backgroundColor = "#1d6ea3"; // Например, устанавливаем красный цвет фона
+        btn2.style.color = "white"; // Устанавливаем белый цвет текста
+//        btn2.style.z-index = '1';
+
+        // Применяем стили напрямую к кнопке btn2
+        button.style.backgroundColor = "#fff"; // Например, устанавливаем синий цвет фона
+        button.style.color = "#000"; // Устанавливаем белый цвет текста
+//        button.style.z-index = '0';
+
+        // Заменяем содержимое формы
+        form.innerHTML = `
+            {% csrf_token %}
+            <div>
+                <div class="input" id="first_input">
+                    <input required type="text" name="ID" placeholder="ID">
+                </div>
+                <div class="input">
+                    <input required type="text" name="last_name" placeholder="Фамилия">
+                </div>
+                <div class="input">
+                    <input required type="text" name="first_name" placeholder="Имя">
+                </div>
+                <div class="input">
+                    <input type="text" name="middle_name" placeholder="Отчество">
+                </div>
+            </div>
+            <button id="edit" type="submit">Изменить</button>
+        `;
+        // Устанавливаем атрибут action для формы
+        form.action = "{% url 'editing' %}";
+        console.log("Кнопка была нажата!");
+        });
+    });
+</script>
+</body>
+</html>

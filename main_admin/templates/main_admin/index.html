@@ -1,0 +1,68 @@
+<!--main_admin\index.html-->
+{% load static %}
+
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=screen-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/df08f4fc0e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'main_admin\css\main.css' %}">
+
+<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
+<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
+<!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">-->
+    <title>Admin</title>
+</head>
+<body>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 5000); // Обновление каждые 5 секунд (5000 миллисекунд)
+    </script>
+    <div class="scrollable-table">
+        <table>
+            <thead class="table">
+                <th>ID</th>
+                <th>Номер</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th>Статус</th>
+            </thead>
+            <tbody>
+                {% for queue in queues %}
+
+                <tr align=center>
+                    <td>{{ queue.id }}</td>
+                    <td>{{ queue.queue_id }}</td>
+                    <td>{{ queue.last_name }}</td>
+                    <td>{{ queue.first_name }}</td>
+                    <td>{{ queue.middle_name }}</td>
+                    <td>{{ queue.affiliation }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <img src="{% static 'main_admin/img/VVSU.svg' %}">
+
+    <a href="{% url 'edit_students' %}">
+        {% csrf_token %}
+        <button id="edit" type="submit" ><i class="fa-solid fa-edit"></i> Редактировать</button>
+    </a>
+
+    <form method="POST" action="{% url 'reset_queues' %}">
+        {% csrf_token %}
+        <button id="reload" type="submit" ><i class="fa-solid fa-arrows-rotate"></i> Сброс таблицы</button>
+    </form>
+
+    <a href="{% url 'add_to_queue' %}">
+        <button id="add" type="submit">
+            <i class="fa-solid fa-user-plus"></i>
+            Добавить в очередь
+        </button>
+    </a>
+</body>
+</html>

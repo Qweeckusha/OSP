@@ -1,0 +1,37 @@
+<!--main_admin\admin_U.html-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin (University)</title>
+</head>
+<body>
+     <div class="table" id="table_1">
+        <table>
+            <thead>
+                <th>Университет</th>
+            </thead>
+            <tbody>
+                {% for queue in queues %}
+                <tr>
+                    {% if queue.queue_id|slice:":1" == "У" %}
+                    <td>{{ queue.queue_id }}</td>
+                    <td>{{ queue.last_name }}</td>
+                    <td>{{ queue.first_name }}</td>
+                    <td>{{ queue.middle_name }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+     <form method="POST" action="{% url 'call_ten_students_university' %}">
+         {% csrf_token %}
+         <button type="submit">Вызвать 10 человек</button>
+     </form>
+    <iframe frameborder="0" style="border:none;width:100%;height:210px;" width="100%" height="210" src="https://music.yandex.ru/iframe/track/87775239/17003490">Слушайте <a href='https://music.yandex.ru/album/17003490/track/87775239'>Wolves</a> — <a href='https://music.yandex.ru/artist/10873670'>Lofi Fruits Music</a> на Яндекс Музыке</iframe>
+
+</body>
+</html>

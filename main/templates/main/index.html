@@ -1,0 +1,62 @@
+<!--main\main_user.html-->
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main\css\main_user.css' %}">
+    <title>Очередь</title>
+</head>
+<body>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 3000);
+    </script>
+    <div class="table" id="table_1">
+        <table>
+            <thead>
+                <th>Университет</th>
+            </thead>
+            <tbody>
+                {% for queue in queues %}
+                <tr>
+                    {% if queue.queue_id|slice:":1" == "У" %}
+                    <td>{{ queue.queue_id }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="table" id="table_2">
+        <table>
+            <thead>
+                <th>Колледж</th>
+            </thead>
+            <tbody>
+                {% for queue in queues %}
+                <tr>
+                    {% if queue.queue_id|slice:":1" == "К" %}
+                    <td>{{ queue.queue_id }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+            <p>{{ user.queue_id }} {{ user.first_name}}</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Выйти</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <div>
+        <img src="{% static 'main_admin/img/VVSU.svg' %}">
+    </div>
+</body>
+</html>
