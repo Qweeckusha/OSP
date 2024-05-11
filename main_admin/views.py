@@ -11,6 +11,7 @@ from .models import CustomUser, Counter, AdminUser
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
+@never_cache
 def main_admin_page(request):
     try:
         queues = CustomUser.objects.all()
