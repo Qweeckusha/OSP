@@ -8,17 +8,10 @@
     <script src="https://kit.fontawesome.com/df08f4fc0e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'main_admin\css\main.css' %}">
 
-<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
-<!--    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">-->
+
     <title>Admin</title>
 </head>
 <body>
-    <script>
-        setTimeout(function() {
-            location.reload();
-        }, 10000);
-    </script>
     <div class="scrollable-table">
         <table>
             <thead class="table">
@@ -53,10 +46,19 @@
         <button id="edit" type="submit" ><i class="fa-solid fa-edit"></i> Редактировать</button>
     </a>
 
-    <form method="POST" action="{% url 'reset_queues' %}">
-        {% csrf_token %}
-        <button id="reload" type="submit" ><i class="fa-solid fa-arrows-rotate"></i> Сброс таблицы</button>
-    </form>
+<!--    <form method="POST" action="{% url 'reset_queues' %}">-->
+<!--        {% csrf_token %}-->
+<!--    </form>-->
+    <button id="reload" type="submit" ><i class="fa-solid fa-arrows-rotate"></i> Сброс таблицы</button>
+    <div id="myModal" class="modal">
+        <div class="modalContent">
+            <span class="close">&times;</span>
+            <h3>Код подтверждения</h3>
+        </div>
+    </div>
+<script>
+
+</script>
 
     <a href="{% url 'add_to_queue' %}">
         <button id="add" type="submit">
