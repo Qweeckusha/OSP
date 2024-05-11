@@ -138,8 +138,6 @@ def call_ten_students_university():
     studs_to_call = CustomUser.objects.filter(affiliation='Университет')[:10]
 
     # Это пока заглушка
-    # TODO: Сделать так, чтобы записи удалялись после того, как вызовут следующую 10, а перед ними подсвечивать
-    #  другим цветом, выделять
     for stud in studs_to_call:
         stud.delete()
 
