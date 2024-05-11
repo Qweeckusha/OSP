@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login
 from django.views.decorators.cache import never_cache
@@ -7,7 +8,7 @@ from django.views.decorators.http import require_POST
 from .backends import AdminAuthBackend, QueueAuthBackend
 from .forms import LoginForm, LoginFormAdmin, RegFormAdmin
 from .models import CustomUser, Counter, AdminUser
-
+from time import *
 
 @login_required
 @user_passes_test(lambda u: u.is_staff)
@@ -71,32 +72,37 @@ def create_user(request):
 
 @require_POST
 def reset_queues(request):
-    # Удаление всех записей из таблицы CustomUser
-    CustomUser.objects.all().delete()
+    key = request.POST.get('key')
+    if key == '932468':
+        # Удаление всех записей из таблицы CustomUser
+        CustomUser.objects.all().delete()
 
-    admins = AdminUser.objects.all()
-    for admin in admins:
-        if admin.username not in ['collector', 'adminU', 'adminC']:
-            admin.delete()
+        admins = AdminUser.objects.all()
+        for admin in admins:
+            if admin.username not in ['collector', 'adminU', 'adminC']:
+                admin.delete()
 
-    # Сброс счетчика автоинкремента (если используется база данных, поддерживающая автоинкремент)
-    # Важно: этот код работает только для определенных типов баз данных, таких как SQLite.
+        # Сброс счетчика автоинкремента (если используется база данных, поддерживающая автоинкремент)
+        # Важно: этот код работает только для определенных типов баз данных, таких как SQLite.
 
-    counter, _ = Counter.objects.get_or_create(id=1)
-    counter.university_counter = 0
-    counter.college_counter = 0
-    counter.save()
+        counter, _ = Counter.objects.get_or_create(id=1)
+        counter.university_counter = 0
+        counter.college_counter = 0
+        counter.save()
 
-    from django.db import connection
-    with connection.cursor() as cursor:
-        try:
-            cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_customuser'])
-        except Exception as e:
-            print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
+        from django.db import connection
+        with connection.cursor() as cursor:
+            try:
+                cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_customuser'])
+            except Exception as e:
+                print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
 
-    # После сброса перенаправляем пользователя на страницу администратора
-    return redirect('admin_page')
-
+        # После сброса перенаправляем пользователя на страницу администратора
+        return redirect('admin_page')
+    else:
+        return HttpResponse('Неверный код!')
+        sleep(2)
+        return redirect('admin_page')
 @require_POST
 def edit_students_process(request):
     # Получаем данные из запроса
