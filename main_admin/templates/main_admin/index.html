@@ -57,7 +57,7 @@
             <h3>Введите код подтверждения</h3>
             <form method="POST" action="{% url 'reset_queues' %}">
                 {% csrf_token %}
-                <input id="enterCode" type="text" placeholder="Код">
+                <input id="enterCode" type="text" name="key" placeholder="Код">
             </form>
         </div>
     </div>
