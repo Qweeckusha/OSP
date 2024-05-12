@@ -36,7 +36,7 @@
             </thead>
             <tbody>
                 {% for queue in queues %}
-                <tr>
+                <tr class="{% if queue.called %}called_c{% endif %}">
                     {% if queue.queue_id|slice:":1" == "К" %}
                     <td>{{ queue.queue_id }}</td>
                     {% endif %}

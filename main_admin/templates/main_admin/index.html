@@ -12,6 +12,11 @@
     <title>Admin</title>
 </head>
 <body>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 30000);
+    </script>
     <div class="scrollable-table">
         <table>
             <thead class="table">
@@ -25,14 +30,15 @@
             <tbody>
                 {% for queue in queues %}
 
-                <tr align=center>
-                    <td>{{ queue.id }}</td>
-                    <td>{{ queue.queue_id }}</td>
-                    <td>{{ queue.last_name }}</td>
-                    <td>{{ queue.first_name }}</td>
-                    <td>{{ queue.middle_name }}</td>
-                    <td>{{ queue.affiliation }}</td>
-                </tr>
+                    <tr class="{% if queue.called and queue.affiliation == 'Университет' %}called{% elif queue.called and queue.affiliation == 'Колледж'  %}called_c{% endif %}" align=center>
+                        <td>{{ queue.id }}</td>
+                        <td>{{ queue.queue_id }}</td>
+                        <td>{{ queue.last_name }}</td>
+                        <td>{{ queue.first_name }}</td>
+                        <td>{{ queue.middle_name }}</td>
+                        <td>{{ queue.affiliation }}</td>
+                    </tr>
+
                 {% endfor %}
             </tbody>
         </table>

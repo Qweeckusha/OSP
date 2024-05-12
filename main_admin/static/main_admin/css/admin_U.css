@@ -83,3 +83,7 @@ img {
     height: auto;
     max-width: 200px;
 }
+
+.called {
+    background-color: #ff91008d;
+}

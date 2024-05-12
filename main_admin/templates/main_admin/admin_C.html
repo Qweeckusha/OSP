@@ -10,6 +10,11 @@
     <title>Admin (College)</title>
 </head>
 <body>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 5000);
+    </script>
     <div id="lable">
         <h1>Колледж</h1>
     </div>
@@ -20,15 +25,17 @@
                 <th>Фамилия</th>
                 <th>Имя</th>
                 <th>Отчество</th>
+                <th>called</th>
             </thead>
             <tbody>
                 {% for queue in queues %}
-                <tr>
+                <tr class="{% if queue.called%}called_c{% endif %}">
                     {% if queue.queue_id|slice:":1" == "К" %}
                     <td>{{ queue.queue_id }}</td>
                     <td>{{ queue.last_name }}</td>
                     <td>{{ queue.first_name }}</td>
                     <td>{{ queue.middle_name }}</td>
+                    <td>{{ queue.called }}</td>
                     {% endif %}
                 </tr>
                 {% endfor %}

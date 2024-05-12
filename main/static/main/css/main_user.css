@@ -53,5 +53,9 @@ img {
 }
 
 .called {
-    backgr
+    background-color: #ff91008d;
+}
+
+.called_c {
+    background-color: #1d6da3a3;
 }

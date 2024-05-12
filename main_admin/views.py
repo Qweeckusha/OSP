@@ -162,16 +162,14 @@ def delete_students(request):
 @require_POST
 def call_ten_students_university(request):
     # Получаем первые 10 записей из очереди университета
-    studs_to_call = CustomUser.objects.filter(affiliation='Университет')[:10]
+    called_studs = CustomUser.objects.filter(affiliation='Университет', called=True)[:10]
+    studs_to_call = CustomUser.objects.filter(affiliation='Университет', called=False)[:10]
 
+    for stud in called_studs:
+        stud.delete()
     for stud in studs_to_call:
-        if stud.called:
-            stud.delete()
-        else:
-            stud.called = True
-            stud.save()
-
-
+        stud.called = True
+        stud.save()
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminU')
@@ -180,14 +178,14 @@ def call_ten_students_university(request):
 @require_POST
 def call_ten_students_college(request):
     # Получаем первые 10 записей из очереди университета
-    studs_to_call = CustomUser.objects.filter(affiliation='Колледж')[:10]
+    called_studs = CustomUser.objects.filter(affiliation='Колледж', called=True)[:10]
+    studs_to_call = CustomUser.objects.filter(affiliation='Колледж', called=False)[:10]
 
+    for stud in called_studs:
+        stud.delete()
     for stud in studs_to_call:
-        if stud.called:
-            stud.delete()
-        else:
-            stud.called = True
-            stud.save()
+        stud.called = True
+        stud.save()
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminC')
