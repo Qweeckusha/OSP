@@ -14,11 +14,10 @@ from time import *
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 @never_cache
-def main_admin_page(request, error=None):
-    # error = request.GET.get('error')
+def main_admin_page(request):
     try:
         queues = CustomUser.objects.all()
-        return render(request, 'main_admin/index.html', {'queues': queues, 'error': error})
+        return render(request, 'main_admin/index.html', {'queues': queues})
     except:
         print('Что-то не так')
 def admin_U_page(request):
@@ -102,11 +101,8 @@ def reset_queues(request):
         # После сброса перенаправляем пользователя на страницу администратора
         return redirect('admin_page')
     else:
-        # queues = CustomUser.objects.all()
-        # return render(request, 'main_admin/index.html', {'queues': queues, 'error': 'Неверный код!'})
-        # return redirect('admin_page', error='Неверный код!')
-        # return main_admin_page(request, error='Неверный код!')
-        return HttpResponseRedirect(reverse('admin_page') + '?error=Неверный код!')
+        queues = CustomUser.objects.all()
+        return render(request, 'main_admin/index.html', {'queues': queues, 'error': 'Неверный код!'})
 
 
 @require_POST

@@ -58,41 +58,33 @@
             </form>
         </div>
     </div>
+{% if error %}
+    <div style="display: block;" id="secModal" class="modalSec">
 
-<div id="secModal" class="modalSec">
-    <div class="modal-content">
-        <a href="{% url 'admin_page' %}"><span class="close">&times;</span></a>
-        <div >Статус выполнения: </div>
-        <p id="error-content"></p>
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div >Статус выполнения: </div>
+            {{ error }}
+        </div>
+
     </div>
-</div>
-<script>
-    var secModal = document.getElementById("secModal");
-    var span = document.querySelector(".modalSec .close");
+    <script>
+        var secModal = document.getElementById("secModal");
+        var span = document.querySelector(".modalSec .close");
 
-    span.onclick = function() {
-        secModal.style.display = "none";
-    };
-
-    window.onclick = function(event) {
-        if (event.target && event.target === secModal) {
+        span.onclick = function() {
             secModal.style.display = "none";
-        }
-    };
-    document.addEventListener('DOMContentLoaded', function () {
-        // Получаем значение параметра error из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const error = urlParams.get('error');
+            window.location.href = "/admin_panel";
+        };
 
-        // Если есть ошибка, показываем сообщение об ошибке
-        if (error) {
-            var errorContent = document.getElementById("error-content");
-            errorContent.textContent = error;
-            secModal.style.display = "block";
+        secModal.onclick = function () {
+        if(event.target == secModal) {
+            secModal.style.display = "none";
+            window.location.href = "/admin_panel";
         }
-    });
-
-</script>
+    }
+    </script>
+{% endif %}
 <script>
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("reload");
