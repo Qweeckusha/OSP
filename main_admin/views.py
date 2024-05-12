@@ -48,26 +48,44 @@ def create_user(request):
 
     # Получаем или создаем объект счетчика
     counter, created = Counter.objects.get_or_create(id=1)
+    if last_name[:2] == '10':
+        for i in range(10):  #Крысерский жоский бэк для дабавления 10 челов
+            # Обновляем счетчик в зависимости от принадлежности
+            if affiliation == 'Университет':
+                counter.university_counter += 1
+                queue_id = f'У{counter.university_counter}'
+            else:
+                counter.college_counter += 1
+                queue_id = f'К{counter.college_counter}'
 
-    # Обновляем счетчик в зависимости от принадлежности
-    if affiliation == 'Университет':
-        counter.university_counter += 1
-        queue_id = f'У{counter.university_counter}'
+            # Сохраняем изменения в счетчике
+            counter.save()
+            CustomUser.objects.create_user(
+                last_name=last_name[2:],
+                first_name=first_name,
+                middle_name=middle_name,
+                affiliation=affiliation,
+                queue_id=queue_id
+            )
     else:
-        counter.college_counter += 1
-        queue_id = f'К{counter.college_counter}'
+        # Обновляем счетчик в зависимости от принадлежности
+        if affiliation == 'Университет':
+            counter.university_counter += 1
+            queue_id = f'У{counter.university_counter}'
+        else:
+            counter.college_counter += 1
+            queue_id = f'К{counter.college_counter}'
 
-    # Сохраняем изменения в счетчике
-    counter.save()
+        # Сохраняем изменения в счетчике
+        counter.save()
 
-    # Создаем нового пользователя
-    CustomUser.objects.create_user(
-        last_name=last_name,
-        first_name=first_name,
-        middle_name=middle_name,
-        affiliation=affiliation,
-        queue_id=queue_id
-    )
+        CustomUser.objects.create_user(
+            last_name=last_name,
+            first_name=first_name,
+            middle_name=middle_name,
+            affiliation=affiliation,
+            queue_id=queue_id
+        )
 
     return redirect('admin_page')
 
@@ -142,27 +160,34 @@ def delete_students(request):
     return redirect('admin_page')
 
 @require_POST
-def call_ten_students_university():
+def call_ten_students_university(request):
     # Получаем первые 10 записей из очереди университета
     studs_to_call = CustomUser.objects.filter(affiliation='Университет')[:10]
 
-    # Это пока заглушка
     for stud in studs_to_call:
-        stud.delete()
+        if stud.called:
+            stud.delete()
+        else:
+            stud.called = True
+            stud.save()
+
+
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminU')
 
 
 @require_POST
-def call_ten_students_college():
+def call_ten_students_college(request):
     # Получаем первые 10 записей из очереди университета
     studs_to_call = CustomUser.objects.filter(affiliation='Колледж')[:10]
 
-    # Это пока заглушка
     for stud in studs_to_call:
-        stud.called = True
-        stud.save()
+        if stud.called:
+            stud.delete()
+        else:
+            stud.called = True
+            stud.save()
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminC')
