@@ -54,10 +54,11 @@
     <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h3>Введите код подтверждения</h3>
+            <div id="submit">Введите код подтверждения</div>
             <form method="POST" action="{% url 'reset_queues' %}">
                 {% csrf_token %}
                 <input id="enterCode" type="text" name="key" placeholder="Код">
+                <button type="submit" id="apply">Принять</button>
             </form>
         </div>
     </div>

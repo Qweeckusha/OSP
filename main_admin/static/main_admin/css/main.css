@@ -63,6 +63,20 @@ button {
     background-color: #1D6EA3;
 }
 
+#submit {
+    font-size: 26pt;
+    margin-bottom: 25px;
+}
+
+#apply {
+    background-color: rgba(1, 1, 1, 0);
+    color: #fff;
+}
+
+#apply:hover {
+    background-color: #ff9000;
+}
+
 button:focus {
     background-color: #ff9000;
     box-shadow: inset 0 0 0 7px #fff;
@@ -107,6 +121,7 @@ img {
     border-radius: 15px;
     width: 40%;
     box-shadow: #000 0px 5px 10px 0px;
+
 }
 
 .close {
