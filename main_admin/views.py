@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login
+from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
 
@@ -13,10 +14,11 @@ from time import *
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 @never_cache
-def main_admin_page(request):
+def main_admin_page(request, error=None):
+    # error = request.GET.get('error')
     try:
         queues = CustomUser.objects.all()
-        return render(request, 'main_admin/index.html', {'queues': queues})
+        return render(request, 'main_admin/index.html', {'queues': queues, 'error': error})
     except:
         print('Что-то не так')
 def admin_U_page(request):
@@ -100,9 +102,13 @@ def reset_queues(request):
         # После сброса перенаправляем пользователя на страницу администратора
         return redirect('admin_page')
     else:
-        return HttpResponse('Неверный код!')
-        sleep(2)
-        return redirect('admin_page')
+        # queues = CustomUser.objects.all()
+        # return render(request, 'main_admin/index.html', {'queues': queues, 'error': 'Неверный код!'})
+        # return redirect('admin_page', error='Неверный код!')
+        # return main_admin_page(request, error='Неверный код!')
+        return HttpResponseRedirect(reverse('admin_page') + '?error=Неверный код!')
+
+
 @require_POST
 def edit_students_process(request):
     # Получаем данные из запроса

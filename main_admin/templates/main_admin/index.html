@@ -46,10 +46,6 @@
         <button id="edit" type="submit" ><i class="fa-solid fa-edit"></i> Редактировать</button>
     </a>
 
-   <!-- <form method="POST" action="{% url 'reset_queues' %}">
-       {% csrf_token %}
-   </form> -->
-
     <button id="reload"><i class="fa-solid fa-arrows-rotate"></i> Сброс таблицы</button>
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -62,6 +58,41 @@
             </form>
         </div>
     </div>
+
+<div id="secModal" class="modalSec">
+    <div class="modal-content">
+        <a href="{% url 'admin_page' %}"><span class="close">&times;</span></a>
+        <div >Статус выполнения: </div>
+        <p id="error-content"></p>
+    </div>
+</div>
+<script>
+    var secModal = document.getElementById("secModal");
+    var span = document.querySelector(".modalSec .close");
+
+    span.onclick = function() {
+        secModal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (event.target && event.target === secModal) {
+            secModal.style.display = "none";
+        }
+    };
+    document.addEventListener('DOMContentLoaded', function () {
+        // Получаем значение параметра error из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const error = urlParams.get('error');
+
+        // Если есть ошибка, показываем сообщение об ошибке
+        if (error) {
+            var errorContent = document.getElementById("error-content");
+            errorContent.textContent = error;
+            secModal.style.display = "block";
+        }
+    });
+
+</script>
 <script>
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("reload");
