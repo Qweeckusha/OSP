@@ -69,7 +69,7 @@ button {
 }
 
 #apply {
-    background-color: rgba(1, 1, 1, 0);
+    background-color: #1D6EA3;
     color: #fff;
 }
 
@@ -128,6 +128,7 @@ img {
     float: right;
     font-size: 24pt;
     font-weight: 600;
+    cursor: pointer;
 }
 
 .close:hover {
