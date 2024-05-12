@@ -1,4 +1,4 @@
-<!--main\main_user.html-->
+<!--main\index.html-->
 {% load static %}
 <html lang="ru">
 <head>
@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 {% for queue in queues %}
-                <tr>
+                <tr class="{% if queue.called %}called{% endif %}">
                     {% if queue.queue_id|slice:":1" == "У" %}
                     <td>{{ queue.queue_id }}</td>
                     {% endif %}

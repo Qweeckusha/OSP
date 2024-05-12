@@ -16,6 +16,7 @@ class CustomUser(AbstractUser):
     first_name = models.CharField(max_length=100)
     middle_name = models.CharField(max_length=100)
     affiliation = models.CharField(max_length=12)
+    called = models.BooleanField(default=False)
     USERNAME_FIELD = 'queue_id'
 
     # Добавьте атрибут related_name для избежания конфликта имен

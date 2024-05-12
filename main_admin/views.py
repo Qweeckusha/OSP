@@ -161,7 +161,8 @@ def call_ten_students_college():
 
     # Это пока заглушка
     for stud in studs_to_call:
-        stud.delete()
+        stud.called = True
+        stud.save()
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminC')
