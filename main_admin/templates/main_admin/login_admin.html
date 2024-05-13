@@ -25,11 +25,10 @@
         {% csrf_token %}
         <h3>Вход</h3>
         {{ form_admin.as_p }}
-
-        <button type="submit">Войти</button>
         {% if error_message %}
             <p>{{ error_message }}</p>
         {% endif %}
+        <button type="submit">Войти</button>
         <div class="social">
             <a href="{% url 'login' %}"><div>Пользователям</div></a>
         </div>
