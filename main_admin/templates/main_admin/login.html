@@ -23,10 +23,11 @@
         <h3>Вход</h3>
         {{ form.as_p }}
 
-        <button type="submit">Войти</button>
         {% if error_message %}
             <p>{{ error_message }}</p>
         {% endif %}
+        <button type="submit">Войти</button>
+
 
         <div class="social">
             <a href="{% url 'login_admins' %}"><div id="admin">Сотрудникам</div></a>
