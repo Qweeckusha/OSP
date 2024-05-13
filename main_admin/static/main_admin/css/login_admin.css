@@ -17,7 +17,7 @@ body{
 }
 
 img {
-    width: 100px;
+    width: 200px;
     margin-left: 15px;
     margin-top: 20px;
 }
@@ -59,7 +59,7 @@ img {
 }
 
 form{
-    height: 600px;
+    height: auto;
     width: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
@@ -71,6 +71,7 @@ form{
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 50px 35px;
+    padding-bottom: 25px;
 }
 
 form *{
@@ -163,7 +164,14 @@ text-decoration: none;
 text-decoration: none;
 }
 
-p {
-    text-decoration: none;
-    color: #fff;
+#error {
+    margin-top: 25px;
+    position: relative;
+    bottom: 0%;
+    text-align: center;
+}
+
+div p {
+    color: red;
+    font-size: 14pt;
 }

@@ -17,17 +17,16 @@
         <img src="{% static 'main_admin/img/VVSU.svg' %}" alt="vvsu">
     </div>
     <div class="background">
+        
         <div class="shape"></div>
         <div class="shape"></div>
+        
     </div>
 
     <form id="login_users" action="{% url 'login_admins' %}" method="POST">
         {% csrf_token %}
         <h3>Вход</h3>
         {{ form_admin.as_p }}
-        {% if error_message %}
-            <p>{{ error_message }}</p>
-        {% endif %}
         <button type="submit">Войти</button>
         <div class="social">
             <a href="{% url 'login' %}"><div>Пользователям</div></a>
@@ -35,6 +34,11 @@
         <div class="social">
             <a href="{% url 'registr_admin' %}"><div>Регистрация</div></a>
         </div>
-    </form>
+        <div id="error">
+            {% if error_message %}
+                <p>{{ error_message }}</p>
+            {% endif %}
+        </div>
+    </form>    
 </body>
 </html>
