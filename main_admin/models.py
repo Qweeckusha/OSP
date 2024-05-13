@@ -1,12 +1,14 @@
 #main_admin/models.py
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
+
 from .managers import CustomUserManager, AdminUserManager
 
 
-class Counter(models.Model):
-    university_counter = models.IntegerField(default=0)
-    college_counter = models.IntegerField(default=0)
+# class Counter(models.Model):
+#     university_counter = models.IntegerField(default=0)
+#     college_counter = models.IntegerField(default=0)
 
 class CustomUser(AbstractUser):
     # Добавьте поля для ФИО
@@ -39,3 +41,8 @@ class CustomUser(AbstractUser):
 
 class AdminUser(AbstractUser):
     objects = AdminUserManager()
+
+class Analytics(models.Model):
+    start_time = models.DateTimeField(default=timezone.now)
+    university_counter = models.IntegerField(default=0)
+    college_counter = models.IntegerField(default=0)

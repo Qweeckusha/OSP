@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 
 from .backends import AdminAuthBackend, QueueAuthBackend
 from .forms import LoginForm, LoginFormAdmin, RegFormAdmin
-from .models import CustomUser, Counter, AdminUser
+from .models import CustomUser, Analytics, AdminUser
 from time import *
 
 @login_required
@@ -47,7 +47,7 @@ def create_user(request):
     CustomUser = get_user_model()
 
     # Получаем или создаем объект счетчика
-    counter, created = Counter.objects.get_or_create(id=1)
+    counter, created = Analytics.objects.get_or_create(id=1)
     if last_name[:2] == '10':
         for i in range(10):  #Крысерский жоский бэк для дабавления 10 челов
             # Обновляем счетчик в зависимости от принадлежности
@@ -104,7 +104,7 @@ def reset_queues(request):
         # Сброс счетчика автоинкремента (если используется база данных, поддерживающая автоинкремент)
         # Важно: этот код работает только для определенных типов баз данных, таких как SQLite.
 
-        counter, _ = Counter.objects.get_or_create(id=1)
+        counter, _ = Analytics.objects.get_or_create(id=1)
         counter.university_counter = 0
         counter.college_counter = 0
         counter.save()
@@ -165,11 +165,20 @@ def call_ten_students_university(request):
     called_studs = CustomUser.objects.filter(affiliation='Университет', called=True)[:10]
     studs_to_call = CustomUser.objects.filter(affiliation='Университет', called=False)[:10]
 
+    # Проверяем, есть ли студенты для вызова
+
     for stud in called_studs:
         stud.delete()
+    # Обновляем статус вызова для студентов, которых собираемся вызвать
     for stud in studs_to_call:
         stud.called = True
         stud.save()
+    Analytics.objects.create()
+
+        # Создаем объект аналитики для этой партии вызова
+
+
+
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminU')
