@@ -93,11 +93,7 @@ img {
     top: 2.5%;
     position: absolute;
     right: 3.5%;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 25%;
-    min-height: 25%;
+    width: 200px;
 }
 
 .modal {
@@ -164,4 +160,178 @@ img {
 
 .called_c {
     background-color: #1d6da3a3;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+    * {
+        font-family:"Inter", sans-serif;
+        font-weight: 600;
+        font-size: 12pt;
+    }
+    html, body {
+        overflow: hidden; /* Запретить прокрутку на странице */
+    }
+    table {
+        position: relative;
+        left: 1.5%;
+        width: 97%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+    .scrollable-table {
+        height: 92%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        float: left;
+        top: 2.5%;
+        left: 1.406%;
+        width: 62.5%;
+        border: 7px solid #1D6EA3;
+        border-radius: 10px;
+        position: absolute;
+    }
+    td, th {
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border-bottom: 1px solid #9D9D9D; /* Разделительная линия между строками */
+    }
+    td {
+        font-size: 12pt;
+    }
+    button {
+        font-family:"Inter", sans-serif;
+        font-weight: 900;
+        font-size: 12pt;
+        color: #000;
+        float: right;
+        position: absolute;
+        bottom: 2.5%;
+        right: 5.8125%;
+        height: 13.5%;
+        width: 23.125%;
+        background-color: #FFF;
+        border-radius: 20px;
+        border: 0px;
+        transition: transform 0.5s ease;
+
+    }
+
+    i {
+        font-size: 12pt;
+    }
+
+
+    #reload {
+        bottom: 18%;
+    }
+
+    #edit {
+        bottom: 33.5%;
+    }
+    #add:hover, #add:focus {
+        background-color: #1D6EA3;
+    }
+
+    #submit {
+        font-size: 18pt;
+        margin-bottom: 25px;
+    }
+
+    #apply {
+        background-color: #1D6EA3;
+        height: 65px;
+        color: #fff;
+    }
+
+    #apply:hover {
+        background-color: #ff9000;
+    }
+
+    button:focus {
+        background-color: #ff9000;
+        box-shadow: inset 0 0 0 7px #fff;
+        transition: all 0.1s;
+        color: #FFF;
+    }
+    button:hover {
+        transform: scale(1.05);
+        transition: all 0.1s;
+        background-color: #ff9000;
+        color: #FFF;
+    }
+    img {
+        top: 2.5%;
+        position: absolute;
+        right: 3.5%;
+        width: 150px;
+    }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 5;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.356);
+        backdrop-filter: blur(7px);
+    }
+
+    .modalSec {
+        display: none;
+        position: fixed;
+        z-index: 5;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.356);
+        backdrop-filter: blur(7px);
+    }
+
+    .modal-content {
+        background-color: #FFF;
+        margin: 15% auto;
+        padding: 20px;
+        border: 3px solid #1D6EA3;
+        border-radius: 15px;
+        width: 40%;
+        box-shadow: #000 0px 5px 10px 0px;
+
+    }
+
+    .close {
+        float: right;
+        font-size: 24pt;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: #ff9000;
+    }
+
+    #enterCode {
+        box-shadow: #000 0px 5px 10px 0px;
+        padding-left: 1.5%;
+        height: 40px;
+        width: 47%;
+        border: 1px solid #1D6EA3;
+        border-radius: 10px;
+        margin-left: 25%;
+    }
+
+    .called {
+        background-color: #ff91008d;
+    }
+
+    .called_c {
+        background-color: #1d6da3a3;
+    }
 }

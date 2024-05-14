@@ -1,13 +1,11 @@
 <!--main_admin\edit.html-->
 {% load static %}
-
-
-
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <link rel="stylesheet" href="{% static 'main_admin\css\edit.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/df08f4fc0e.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'main_admin\css\edit.css' %}">
 
   <title>Editing</title>
 </head>
@@ -31,15 +29,15 @@
                 <input type="text" name="middle_name" placeholder="Отчество">
             </div>
         </div>
-        <button id="edit" type="submit">Изменить</button>
+        <button id="edit" type="submit"><i class="fa-solid fa-edit"></i> Изменить</button>
     </form>
 
         <div id="switch">
-          <button id="editing">Редактирование</button>
-          <button id="delete">Удаление</button>
+          <button id="editing"><i class="fa-solid fa-edit"></i> Редактирование</button>
+          <button id="delete"><i class="fa-solid fa-user-minus"></i> Удаление</button>
         </div>
     
-    <a href="{% url 'admin_page' %}"><button id="cancel">Отмена</button></a>
+    <a href="{% url 'admin_page' %}"><button id="cancel"><i class="fa-solid fa-xmark"></i> Отмена</button></a>
 <script src="{% static 'main_admin/js/switch.js' %}"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -65,7 +63,7 @@
             <div class="input" id="first_input">
                 <input required type="text" name="queue_id" placeholder="Номер участника">
             </div>
-            <button id="edit" type="submit">Удалить</button>
+            <button id="edit" type="submit"><i class="fa-solid fa-user-minus"></i>Удалить</button>
         `;
         // Устанавливаем атрибут action для формы
         form.action = "{% url 'deleting' %}";
@@ -99,7 +97,7 @@
                     <input type="text" name="middle_name" placeholder="Отчество">
                 </div>
             </div>
-            <button id="edit" type="submit">Изменить</button>
+            <button id="edit" type="submit"><i class="fa-solid fa-edit"></i> Изменить</button>
         `;
         // Устанавливаем атрибут action для формы
         form.action = "{% url 'editing' %}";

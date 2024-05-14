@@ -3,7 +3,7 @@
 * {
     font-family:"Inter", sans-serif;
     font-weight: 600;
-    font-size: 20pt;
+    font-size: 12pt;
 }
 
 *, *:before, *:after{
@@ -22,26 +22,27 @@ img {
 }
 
 .background{
-    width: 430px;
-    height: 600px;
+    width: 310px;
+    height: 400px;
     position: absolute;
     transform: translate(-50%,-50%);
     left: 50%;
     top: 50%;
 }
 .background .shape{
-    height: 200px;
-    width: 200px;
+    height: 100px;
+    width: 100px;
     position: absolute;
     border-radius: 50%;
 }
 .shape:first-child{
     background: linear-gradient(
         #1D6EA3,
-        #2b83be    
+        #2b83be
+                        
     );
-    left: -80px;
-    top: -80px;
+    left: -50px;
+    top: -50px;
 }
 .shape:last-child{
     background: linear-gradient(
@@ -49,12 +50,12 @@ img {
         #ff9000,
         #f17202 
     );
-    right: -80px;
-    bottom: -80px;
+    right: -50px;
+    bottom: -50px;
 }
 form{
-    height: 600px;
-    width: 400px;
+    width: 310px;
+    height: 400px;
     background-color: rgba(255,255,255,0.13);
     position: absolute;
     transform: translate(-50%,-50%);
@@ -73,9 +74,9 @@ form *{
     border: none;
 }
 form h3{
-    font-size: 28pt;
+    font-size: 24pt;
     font-weight: 900;
-    line-height: 42px;
+    line-height: 0px;
     text-align: center;
 }
 
@@ -87,26 +88,25 @@ label{
 }
 input{
     display: block;
-    height: 50px;
+    height: 30px;
     width: 100%;
     background-color: #ddd;
     border-radius: 3px;
     padding: 0 10px;
     margin-top: 8px;
-    font-size: 14px;
+    font-size: 10pt;
     font-weight: 300;
 }
 ::placeholder{
     color: #000000;
 }
 button {
-    font-size: 20pt;
-    margin-top: 96px;
+    font-size: 12pt;
+    margin-top: 15px;
     width: 100%;
     background-color: #1D6EA3;
-    padding: 15px 20px 15px 20px;
+    padding: 10px 15px 10px 15px;
     color: #080710;
-    padding: 15px 0;
     font-weight: 600;
     border-radius: 20px;
     cursor: pointer;
@@ -117,7 +117,7 @@ button {
 }
 
 button p {
-    font-size: 20pt;
+    font-size: 12pt;
 }
 
 button:hover{
