@@ -1,14 +1,11 @@
 <!--main_admin\index.html-->
 {% load static %}
-
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=screen-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/df08f4fc0e.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{% static 'main_admin\css\main.css' %}">
-
-
     <title>Admin</title>
 </head>
 <body>
@@ -60,7 +57,7 @@
             <form method="POST" action="{% url 'reset_queues' %}">
                 {% csrf_token %}
                 <input id="enterCode" type="text" name="key" placeholder="Код">
-                <button type="submit" id="apply">Принять</button>
+                <button type="submit" id="apply"><i class="fa-solid fa-check"></i> Принять</button>
             </form>
         </div>
     </div>
