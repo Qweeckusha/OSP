@@ -46,3 +46,4 @@ class Analytics(models.Model):
     start_time = models.DateTimeField(default=timezone.now)
     university_counter = models.IntegerField(default=0)
     college_counter = models.IntegerField(default=0)
+    is_university = models.BooleanField(default=True)
