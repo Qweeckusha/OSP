@@ -47,7 +47,18 @@
     </div>
     <div id="background-block">
         {% if user.is_authenticated %}
-            <p id="id-block">{{ user.queue_id }} {{ user.first_name}} {{ user.last_name }}</p>
+            <p id="id-block">
+                {% if user.is_staff %}
+                    Вы администратор перейдите на другую страницу |
+                    <a style="color: #fff; text-decoration: None;"  href="{% url 'admin_page' %}" >collector</a> |
+                    <a style="color: #fff; text-decoration: None;" href="{% url 'adminU' %}" >adminU</a> |
+                    <a style="color: #fff; text-decoration: None;" href="{% url 'adminC' %}" >adminC</a> |
+                {% else %}
+                    {{ user.queue_id }}
+                    {{ user.first_name}}
+                    {{ user.last_name }}
+                {% endif %}
+            </p>
             <form action="{% url 'logout' %}" method="post">
                 {% csrf_token %}
                 <button type="submit" id="close">Выйти</button>
