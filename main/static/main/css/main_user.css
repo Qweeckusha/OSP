@@ -3,7 +3,7 @@
     z-index: 1;
     font-family:"Inter", sans-serif;
     font-weight: 600;
-    font-size: 22pt;
+    font-size: 40pt;
     padding: 0;
 }
 *, *:before, *:after{
@@ -25,7 +25,7 @@ table {
     height: auto;
     overflow-x: hidden;
     overflow-y: auto;
-    border: 7px solid #1D6EA3;
+    border: 10px solid #1D6EA3;
     border-radius: 10px;
 }
 #id-block {
@@ -93,6 +93,49 @@ img {
 }
 
 @media (min-width: 996px) {
+    #id-block {
+        font-weight: 900;
+        position: absolute;
+        background-color: #1D6EA3;
+        color: #fff;
+        padding: 15px 20px;
+        right: 3.5%;
+        left: 3.5%;
+        width: auto;
+        bottom: 26%;
+        border-radius: 6px;
+        margin-top: 15px;
+    }
+    .table {
+        position: absolute;
+        top: 2.5%;
+        bottom: 37.5%;
+        width: 43%;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: 10px solid #1D6EA3;
+        border-radius: 10px;
+    }
+    .id-block {
+        width: 100%
+    }
+    button {
+        background-color: #ff9000;
+        position: absolute;
+        font-weight: 900;
+        font-size: auto;
+        margin-top: 20px;
+        color: #FFF;
+        height: 13.5%;
+        width: 23.125%;
+        bottom: 10%;
+        left: 38.5%;
+        border-radius: 30px;
+        border: 0px;
+        transition: transform 0.5s ease;
+    
+    }
     
 }
 @media (min-width: 768px) {
@@ -192,7 +235,7 @@ img {
     }
 }
 
-@media (min-width: 320px) {
+@media (min-width: 320px) and (max-width: 768px) {
     html, body {
         overflow: hidden; /* Запретить прокрутку на странице */
     }
