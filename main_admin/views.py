@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -93,6 +95,27 @@ def create_user(request):
 def reset_queues(request):
     key = request.POST.get('key')
     if key == '932468':
+        # ------------------------------------------Сводка по сессии----------------------------------------------------
+        analytics_objects = Analytics.objects.filter(is_university=True)[1:]
+        summary = []
+        prev_time = None
+        for analytics_object in analytics_objects:
+            if prev_time:
+                time_diff = analytics_object.start_time - prev_time
+                summary.append(
+                    {'start_time': prev_time, 'end_time': analytics_object.start_time, 'duration': time_diff})
+            prev_time = analytics_object.start_time
+
+
+        durations_timedelta = [entry['duration'] for entry in summary]
+
+        average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
+
+        average_duration_str = str(average_timedelta)
+        print(f'Среднее значение времени: {average_duration_str}')
+
+
+
         # Удаление всех записей из таблицы CustomUser
         CustomUser.objects.all().delete()
         Analytics.objects.all().delete()
@@ -117,15 +140,9 @@ def reset_queues(request):
             except Exception as e:
                 print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
             try:
-                cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_adminuser'])
-            except Exception as e:
-                print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
-            try:
                 cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_analytics'])
             except Exception as e:
-                print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
-        # -----------------------------------------------------------------------------------------------
-
+                print("Error deleting from sqlite_sequence for main_admin_analytics:", e)
 
         # После сброса перенаправляем пользователя на страницу администратора
         return redirect('admin_page')
