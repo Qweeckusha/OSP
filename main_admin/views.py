@@ -48,8 +48,8 @@ def create_user(request):
 
     # Получаем или создаем объект счетчика
     counter, created = Analytics.objects.get_or_create(id=1)
-    if last_name[:2] == '10':
-        for i in range(10):  #Крысерский жоский бэк для дабавления 10 челов
+    if int(last_name[:2]) in range(10,100):
+        for i in range(int(last_name[:2])):  #Крысерский жоский бэк для дабавления n челов до 99
             # Обновляем счетчик в зависимости от принадлежности
             if affiliation == 'Университет':
                 counter.university_counter += 1
@@ -95,6 +95,7 @@ def reset_queues(request):
     if key == '932468':
         # Удаление всех записей из таблицы CustomUser
         CustomUser.objects.all().delete()
+        Analytics.objects.all().delete()
 
         admins = AdminUser.objects.all()
         for admin in admins:
@@ -115,6 +116,16 @@ def reset_queues(request):
                 cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_customuser'])
             except Exception as e:
                 print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
+            try:
+                cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_adminuser'])
+            except Exception as e:
+                print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
+            try:
+                cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_analytics'])
+            except Exception as e:
+                print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
+        # -----------------------------------------------------------------------------------------------
+
 
         # После сброса перенаправляем пользователя на страницу администратора
         return redirect('admin_page')
@@ -175,10 +186,6 @@ def call_ten_students_university(request):
         stud.save()
     Analytics.objects.create()
 
-        # Создаем объект аналитики для этой партии вызова
-
-
-
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminU')
@@ -195,6 +202,7 @@ def call_ten_students_college(request):
     for stud in studs_to_call:
         stud.called = True
         stud.save()
+    Analytics.objects.create(is_university=False)
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminC')
@@ -240,7 +248,7 @@ def login_admins(request):
                 return render(request, 'main_admin/login_admin.html', {'form_admin': form_admin, 'error_message': error_message})
     return render(request, 'main_admin/login_admin.html', {'form_admin': LoginFormAdmin()})
 
-
+@never_cache
 def create_admin(request):
     if request.method == 'POST':
         form = RegFormAdmin(request.POST)
@@ -258,5 +266,4 @@ def create_admin(request):
         else:
             print('Форма неверная')
     else:  # Добавляем обработку GET-запросов для отображения формы
-        form = RegFormAdmin()
-    return render(request, 'main_admin/registr_admin.html', {'form': form})
+        return render(request, 'main_admin/registr_admin.html', {'form': RegFormAdmin()})
