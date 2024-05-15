@@ -148,7 +148,7 @@ img {
         z-index: 1;
         font-family:"Inter", sans-serif;
         font-weight: 600;
-        font-size: 10pt;
+        font-size: 12pt;
     }
     table {
         position: relative;
@@ -173,9 +173,11 @@ img {
         position: absolute;
         border: 2px solid #1D6EA3;
         border-radius: 10px;
-        padding: 15px 20px;
-        bottom: 22%;
-        left: 46.5%;
+        padding: auto;
+        bottom: 25%;
+        text-align: center;
+        height: 3.32%;
+        line-height: center;
     }
     button {
         position: absolute;
@@ -183,11 +185,11 @@ img {
         font-size: auto;
         margin-top: 20px;
         color: #000;
-        height: 13.5%;
+        height: 8.2%;
         width: 23.125%;
-        bottom: 10%;
+        bottom: 12%;
         left: 38.5%;
-        background-color: #FFF;
+        background-color: #ff9000;
         border-radius: 15px;
         border: 0px;
         transition: transform 0.5s ease;
@@ -265,5 +267,6 @@ img {
         left: 25%;
         border-radius: 15px;
         border: 0px;
+
     }
 }
