@@ -165,7 +165,7 @@ button:hover {
     font-size: 12pt;
     color: #000;
     float: right;
-    position: absolute;
+    position: fixed;
     background-color: #FFF;
     border-radius: 20px;
     border: 0px;

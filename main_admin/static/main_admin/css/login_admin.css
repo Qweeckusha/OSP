@@ -269,21 +269,22 @@ div p {
 
     label{
         display: block;
-        margin-top: 30px;
+        margin-top: 20px;
+        margin-bottom: 30px;
         font-size: 16px;
         font-weight: 500;
     }
 
     input{
         display: block;
-        height: 30px;
+        height: 40px;
         width: 100%;
         background-color: #ddd;
         border-radius: 3px;
         padding: 0 10px;
-        margin-top: 8px;
+        margin-top: 30px;
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 300;
     }
 
     ::placeholder{

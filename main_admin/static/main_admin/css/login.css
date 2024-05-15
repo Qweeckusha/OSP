@@ -247,12 +247,12 @@ p {
     }
     input{
         display: block;
-        height: 30px;
+        height: 40px;
         width: 100%;
         background-color: #ddd;
         border-radius: 3px;
         padding: 0 10px;
-        margin-top: 8px;
+        margin-top: 40px;
         font-size: 12px;
         font-weight: 300;
     }

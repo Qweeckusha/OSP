@@ -16,13 +16,50 @@ table {
 .table {
     position: absolute;
     top: 2.5%;
-    bottom: 27.5%;
+    bottom: 37.5%;
     width: 43%;
     height: auto;
     overflow-x: hidden;
     overflow-y: auto;
-    border: 10px solid #1D6EA3;
+    border: 7px solid #1D6EA3;
     border-radius: 10px;
+}
+#id-block {
+    font-weight: 900;
+    position: absolute;
+    border: 2px solid #1D6EA3;
+    border-radius: 10px;
+    padding: 15px 20px;
+    bottom: 22%;
+    left: 46.5%;
+}
+button {
+    position: absolute;
+    font-weight: 900;
+    font-size: auto;
+    margin-top: 20px;
+    color: #000;
+    height: 13.5%;
+    width: 23.125%;
+    bottom: 10%;
+    left: 38.5%;
+    background-color: #FFF;
+    border-radius: 30px;
+    border: 0px;
+    transition: transform 0.5s ease;
+
+}
+button:focus {
+    background-color: #ff9000;
+    box-shadow: inset 0 0 0 7px #fff;
+    transition: all 0.1s;
+    color: #FFF;
+}
+button:hover {
+    transform: scale(1.05);
+    transition: all 0.1s;
+    background-color: #ff9000;
+    color: #FFF;
 }
 #table_1 {
     left: 3.5%;
@@ -40,22 +77,112 @@ td, th {
     border-bottom: 1px solid #9D9D9D; /* Разделительная линия между строками */
 }
 img {
-    z-index: 0;
     bottom: 1.25%;
-    left: 37.25%;
-    max-height: 25.5%;
-    min-height: 25.5%;
+    left: 2.5%;
     position: absolute;
-    width: auto;
-    flex: 1;
-    max-width: 100%; /* Устанавливает максимальную ширину изображения равной 100% ширины родительского элемента */
-    height: auto;
+    width: 200px;
 }
-
 .called {
     background-color: #ff91008d;
 }
 
 .called_c {
     background-color: #1d6da3a3;
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+    html, body {
+        overflow: hidden; /* Запретить прокрутку на странице */
+    }
+    * {
+        z-index: 1;
+        font-family:"Inter", sans-serif;
+        font-weight: 600;
+        font-size: 10pt;
+    }
+    table {
+        position: relative;
+        left: 2%;
+        width: 96%;
+        text-align: center;
+        border-collapse: collapse;
+    }
+    .table {
+        position: absolute;
+        top: 2.5%;
+        bottom: 37.5%;
+        width: 43%;
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border: 5px solid #1D6EA3;
+        border-radius: 6px;
+    }
+    #id-block {
+        font-weight: 900;
+        position: absolute;
+        border: 2px solid #1D6EA3;
+        border-radius: 10px;
+        padding: 15px 20px;
+        bottom: 22%;
+        left: 46.5%;
+    }
+    button {
+        position: absolute;
+        font-weight: 900;
+        font-size: auto;
+        margin-top: 20px;
+        color: #000;
+        height: 13.5%;
+        width: 23.125%;
+        bottom: 10%;
+        left: 38.5%;
+        background-color: #FFF;
+        border-radius: 15px;
+        border: 0px;
+        transition: transform 0.5s ease;
+    
+    }
+    button:focus {
+        background-color: #ff9000;
+        box-shadow: inset 0 0 0 7px #fff;
+        transition: all 0.1s;
+        color: #FFF;
+    }
+    button:hover {
+        transform: scale(1.05);
+        transition: all 0.1s;
+        background-color: #ff9000;
+        color: #FFF;
+    }
+    #table_1 {
+        left: 3.5%;
+    }
+    #table_2 {
+        right: 3.5%;
+    }
+    td, th {
+        text-align: center;
+        padding-left: 1.5%;
+        padding-right: 1.5%;
+        padding-top: 2%;
+        padding-bottom: 2%;
+        border: 0px;
+        border-bottom: 1px solid #9D9D9D; /* Разделительная линия между строками */
+    }
+    img {
+        bottom: 1.25%;
+        left: 2.5%;
+        position: absolute;
+        width: 100px;
+    }
+    .called {
+        background-color: #ff91008d;
+    }
+    
+    .called_c {
+        background-color: #1d6da3a3;
+    }
 }
