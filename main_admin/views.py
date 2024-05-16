@@ -145,7 +145,7 @@ def reset_queues(request):
                 print("Error deleting from sqlite_sequence for main_admin_analytics:", e)
 
         # После сброса перенаправляем пользователя на страницу администратора
-        return redirect('admin_page')
+        return render(request, 'main_admin/index.html', {'stats': average_duration_str})
     else:
         queues = CustomUser.objects.all()
         return render(request, 'main_admin/index.html', {'queues': queues, 'error': 'Неверный код!'})
