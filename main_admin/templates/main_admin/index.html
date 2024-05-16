@@ -14,6 +14,9 @@
             location.reload();
         }, 30000);
     </script>
+
+
+
     <div class="scrollable-table">
         <table>
             <thead class="table">
@@ -61,44 +64,37 @@
             </form>
         </div>
     </div>
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="submit">Введите код подтверждения</div>
-            <form method="POST" action="{% url 'reset_queues' %}">
-                {% csrf_token %}
-                <input id="enterCode" type="text" name="key" placeholder="Код">
-                <button type="submit" id="apply"><i class="fa-solid fa-check"></i> Принять</button>
-            </form>
-        </div>
-    </div>
-{% if error %}
-    <div style="display: block;" id="secModal" class="modalSec">
+
+{% if stats or error %}
+    <div style="display: block;" id="secModal" class="modal">
 
         <div class="modal-content">
             <span class="close">&times;</span>
             <div >Статус выполнения: </div>
-            {{ error }}
+            {% if stats %}Среднее время на приём: {{ stats }}{% else %}{{ error }}{% endif %}
         </div>
 
     </div>
     <script>
         var secModal = document.getElementById("secModal");
-        var span = document.querySelector(".modalSec .close");
+        var span = document.querySelector("#secModal .close");
 
-        span.onclick = function() {
+        span.onclick = function(event) {
             secModal.style.display = "none";
             window.location.href = "/admin_panel";
+            console.log('Нажато!');
         };
 
         secModal.onclick = function () {
-        if(event.target == secModal) {
-            secModal.style.display = "none";
-            window.location.href = "/admin_panel";
-        }
-    }
+            if (event.target == secModal) {
+                secModal.style.display = "none";
+                window.location.href = "/admin_panel";
+            }
+        };
     </script>
 {% endif %}
+
+
 <script>
     var modal = document.getElementById("myModal");
     var btn = document.getElementById("reload");
@@ -116,7 +112,6 @@
         }
     }
 </script>
-
     <a href="{% url 'add_to_queue' %}">
         <button id="add" type="submit">
             <i class="fa-solid fa-user-plus"></i>
