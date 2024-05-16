@@ -61,6 +61,17 @@
             </form>
         </div>
     </div>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="submit">Введите код подтверждения</div>
+            <form method="POST" action="{% url 'reset_queues' %}">
+                {% csrf_token %}
+                <input id="enterCode" type="text" name="key" placeholder="Код">
+                <button type="submit" id="apply"><i class="fa-solid fa-check"></i> Принять</button>
+            </form>
+        </div>
+    </div>
 {% if error %}
     <div style="display: block;" id="secModal" class="modalSec">
 
