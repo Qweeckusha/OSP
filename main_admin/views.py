@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model, authenticate, login
 from django.urls import reverse
@@ -13,6 +13,7 @@ from .forms import LoginForm, LoginFormAdmin, RegFormAdmin
 from .models import CustomUser, Analytics, AdminUser
 from time import *
 
+# ---------------------- renders ----------------------
 @login_required
 @user_passes_test(lambda u: u.is_staff)
 @never_cache
@@ -36,6 +37,7 @@ def add_to_queue(request):
 def edit_students(request):
     return render(request, 'main_admin/edit.html')
 
+# -----------------------------------------------------
 
 @require_POST
 def create_user(request):
@@ -96,24 +98,57 @@ def reset_queues(request):
     key = request.POST.get('key')
     if key == '932468':
         # ------------------------------------------Сводка по сессии----------------------------------------------------
-        analytics_objects = Analytics.objects.filter(is_university=True)[1:]
-        summary = []
-        prev_time = None
-        for analytics_object in analytics_objects:
-            if prev_time:
-                time_diff = analytics_object.start_time - prev_time
-                summary.append(
-                    {'start_time': prev_time, 'end_time': analytics_object.start_time, 'duration': time_diff})
-            prev_time = analytics_object.start_time
+        try:
+            analytics_objects = Analytics.objects.filter(is_university=True)[1:]
+            summary = []
+            prev_time = None
+            for analytics_object in analytics_objects:
+                if prev_time:
+                    time_diff = analytics_object.start_time - prev_time
+                    summary.append(
+                        {'start_time': prev_time, 'end_time': analytics_object.start_time, 'duration': time_diff})
+                prev_time = analytics_object.start_time
 
 
-        durations_timedelta = [entry['duration'] for entry in summary]
+            durations_timedelta = [entry['duration'] for entry in summary]
 
-        average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
+            average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
 
-        average_duration_str = str(average_timedelta)
-        print(f'Среднее значение времени: {average_duration_str}')
+            average_duration_str = str(average_timedelta)
+            print(f'Среднее значение времени: {average_duration_str}')
 
+            # Удаление всех записей из таблицы CustomUser
+            CustomUser.objects.all().delete()
+            Analytics.objects.all().delete()
+
+            admins = AdminUser.objects.all()
+            for admin in admins:
+                if admin.username not in ['collector', 'adminU', 'adminC']:
+                    admin.delete()
+
+            # Сброс счетчика автоинкремента (если используется база данных, поддерживающая автоинкремент)
+            # Важно: этот код работает только для определенных типов баз данных, таких как SQLite.
+
+            counter, _ = Analytics.objects.get_or_create(id=1)
+            counter.university_counter = 0
+            counter.college_counter = 0
+            counter.save()
+
+            from django.db import connection
+            with connection.cursor() as cursor:
+                try:
+                    cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_customuser'])
+                except Exception as e:
+                    print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
+                try:
+                    cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_analytics'])
+                except Exception as e:
+                    print("Error deleting from sqlite_sequence for main_admin_analytics:", e)
+
+            # После сброса перенаправляем пользователя на страницу администратора
+            return render(request, 'main_admin/index.html', {'stats': average_duration_str})
+        except:
+            pass
 
 
         # Удаление всех записей из таблицы CustomUser
@@ -145,7 +180,7 @@ def reset_queues(request):
                 print("Error deleting from sqlite_sequence for main_admin_analytics:", e)
 
         # После сброса перенаправляем пользователя на страницу администратора
-        return render(request, 'main_admin/index.html', {'stats': average_duration_str})
+        return redirect('admin_page')
     else:
         queues = CustomUser.objects.all()
         return render(request, 'main_admin/index.html', {'queues': queues, 'error': 'Неверный код!'})
