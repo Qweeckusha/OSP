@@ -52,26 +52,27 @@ def create_user(request):
 
     # Получаем или создаем объект счетчика
     counter, created = Analytics.objects.get_or_create(id=1)
-    if int(last_name[:2]) in range(10,100):
-        for i in range(int(last_name[:2])):  #Крысерский жоский бэк для дабавления n челов до 99
-            # Обновляем счетчик в зависимости от принадлежности
-            if affiliation == 'Университет':
-                counter.university_counter += 1
-                queue_id = f'У{counter.university_counter}'
-            else:
-                counter.college_counter += 1
-                queue_id = f'К{counter.college_counter}'
+    try:
+        if int(last_name[:2]) in range(10,100):
+            for i in range(int(last_name[:2])):  #Крысерский жоский бэк для дабавления n челов до 99
+                # Обновляем счетчик в зависимости от принадлежности
+                if affiliation == 'Университет':
+                    counter.university_counter += 1
+                    queue_id = f'У{counter.university_counter}'
+                else:
+                    counter.college_counter += 1
+                    queue_id = f'К{counter.college_counter}'
 
-            # Сохраняем изменения в счетчике
-            counter.save()
-            CustomUser.objects.create_user(
-                last_name=last_name[2:],
-                first_name=first_name,
-                middle_name=middle_name,
-                affiliation=affiliation,
-                queue_id=queue_id
-            )
-    else:
+                # Сохраняем изменения в счетчике
+                counter.save()
+                CustomUser.objects.create_user(
+                    last_name=last_name[2:],
+                    first_name=first_name,
+                    middle_name=middle_name,
+                    affiliation=affiliation,
+                    queue_id=queue_id
+                )
+    except:
         # Обновляем счетчик в зависимости от принадлежности
         if affiliation == 'Университет':
             counter.university_counter += 1
