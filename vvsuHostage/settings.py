@@ -28,14 +28,14 @@ LOGOUT_REDIRECT_URL = '/'
 # ------------------------------------------
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
+import vvsuHostage.config as cfg
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$m3u4p!)9-%j&)t$1swp(3k(a@g*08$z$dk1plwwzer8b9al%f'
+SECRET_KEY = cfg.secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '217.74.121.31']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '217.74.121.81']
 
 
 # Application definition
