@@ -4,12 +4,8 @@ function updateQueue() {
                 method: "GET",
                 success: function(response) {
 
-                    var univData = response.filter(function(queue) {
-                        return queue.queue_id.slice(0, 1) == 'У';
-                    });
-                    var colData = response.filter(function(queue) {
-                        return queue.queue_id.slice(0, 1) == 'К';
-                    });
+                    var univData = response.filter(queue => queue.queue_id.startsWith('У'));
+                    var colData = response.filter(queue => queue.queue_id.startsWith('К'));
 
                     // Функции для обновления на страницах
                     updateTable('#admin_panel', response) // Внутрь admin_panel мы помещаем все записи в БД
@@ -27,15 +23,14 @@ function updateTable(tableID, data) {
     data.forEach(function(queue) {
 
         var row = document.createElement('tr');
-        row.innerHTML = (tableID === '#admin_panel') ?
+        row.innerHTML = tableID === '#admin_panel' ?
                         '<td>' + queue.id + '</td>' +
                         '<td>' + queue.queue_id + '</td>' +
                         '<td>' + queue.last_name + '</td>' +
                         '<td>' + queue.first_name + '</td>' +
                         '<td>' + queue.middle_name + '</td>' +
                         '<td>' + queue.affiliation + '</td>' :
-                        (tableID === '#admin_u' || tableID === '#admin_c') ?
-                        '<td>' + queue.id + '</td>' +
+                        tableID === '#admin_u' || tableID === '#admin_c' ?
                         '<td>' + queue.queue_id + '</td>' +
                         '<td>' + queue.last_name + '</td>' +
                         '<td>' + queue.first_name + '</td>' +
@@ -48,6 +43,6 @@ function updateTable(tableID, data) {
         $(tableID).append(row);
     });
 }
-        // Обновлять каждые 2 секунды
+        // Обновлять каждые 5 секунд
         setInterval(updateQueue, 5000);
         $(document).ready(updateQueue);
