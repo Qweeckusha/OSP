@@ -7,11 +7,15 @@ from django.contrib.auth import get_user_model, authenticate, login
 from django.urls import reverse
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_POST
+from rest_framework import viewsets
 
 from .backends import AdminAuthBackend, QueueAuthBackend
 from .forms import LoginForm, LoginFormAdmin, RegFormAdmin
 from .models import CustomUser, Analytics, AdminUser
 from time import *
+
+from .serializers import CustomUserSerializer
+
 
 # ---------------------- renders ----------------------
 @login_required
@@ -186,7 +190,6 @@ def reset_queues(request):
         queues = CustomUser.objects.all()
         return render(request, 'main_admin/index.html', {'queues': queues, 'error': 'Неверный код!'})
 
-
 @require_POST
 def edit_students_process(request):
     # Получаем данные из запроса
@@ -242,7 +245,6 @@ def call_ten_students_university(request):
 
     # После удаления перенаправляем пользователя на страницу администратора
     return redirect('adminU')
-
 
 @require_POST
 def call_ten_students_college(request):
@@ -309,7 +311,6 @@ def create_admin(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             key = form.cleaned_data['key']
-            print(username, password)
 
             if key == 'gT9uJ5sNpE4q':
                 AdminUser.objects.create_adminuser(username=username, password=password)
@@ -320,3 +321,7 @@ def create_admin(request):
             print('Форма неверная')
     else:  # Добавляем обработку GET-запросов для отображения формы
         return render(request, 'main_admin/registr_admin.html', {'form': RegFormAdmin()})
+
+class CustomUserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer

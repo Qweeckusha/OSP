@@ -1,9 +1,13 @@
 #main_admin\urls.py
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
 from .views import main_admin_page, create_user, add_to_queue, admin_U_page, admin_C_page, reset_queues, edit_students, \
     edit_students_process, delete_students, call_ten_students_university, call_ten_students_college, login_users, \
-    create_admin
+    create_admin, CustomUserViewSet
 
+router = DefaultRouter()
+router.register(r'users', CustomUserViewSet)
 urlpatterns = [
     path('', main_admin_page, name='admin_page'),
     path('save/', create_user, name='save_data'),
@@ -16,5 +20,6 @@ urlpatterns = [
     path('deleting/', delete_students, name='deleting'),
     path('adminUniversity/', admin_U_page, name='adminU'),
     path('adminCollege/', admin_C_page, name='adminC'),
-    path('registr_admin/', create_admin, name='registr_admin')
+    path('registr_admin/', create_admin, name='registr_admin'),
+    path('api/', include(router.urls)),
 ]
