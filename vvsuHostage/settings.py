@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,9 +29,9 @@ LOGOUT_REDIRECT_URL = '/'
 # ------------------------------------------
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-import vvsuHostage.config as cfg
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = cfg.secret_key
+SECRET_KEY = config.secret_key
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,6 +44,7 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', '217.74.121.81']
 INSTALLED_APPS = [
     'main',
     'main_admin',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
