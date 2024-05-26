@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{% static 'main_admin\css\admin_C.css' %}">
     <script src="{% static 'main_admin\js\jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'main/js/db_update.js' %}"></script>
     <title>Admin (College)</title>
 </head>
 <body>
@@ -27,17 +28,8 @@
                 <th>Имя</th>
                 <th>Отчество</th>
             </thead>
-            <tbody>
-                {% for queue in queues %}
-                <tr class="{% if queue.called%}called_c{% endif %}">
-                    {% if queue.queue_id|slice:":1" == "К" %}
-                    <td>{{ queue.queue_id }}</td>
-                    <td>{{ queue.last_name }}</td>
-                    <td>{{ queue.first_name }}</td>
-                    <td>{{ queue.middle_name }}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+            <tbody id="admin_c">
+                
             </tbody>
         </table>
     </div>
