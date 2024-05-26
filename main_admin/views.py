@@ -25,8 +25,8 @@ def main_admin_page(request):
     try:
         queues = CustomUser.objects.all()
         return render(request, 'main_admin/index.html', {'queues': queues})
-    except:
-        print('Что-то не так')
+    except Exception as e:
+        return HttpResponse(f'Что-то не так (main_admin_page): {str(e)}')
 def admin_U_page(request):
     queues = CustomUser.objects.all()
     return render(request, 'main_admin/admin_U.html', {'queues': queues})
@@ -41,7 +41,40 @@ def add_to_queue(request):
 def edit_students(request):
     return render(request, 'main_admin/edit.html')
 
-# -----------------------------------------------------
+# -----------------------helping funcs------------------------------
+
+def format_timedelta(td): # Форматирование строки времени в чч:мм:сс
+    return str(td).split('.')[0]
+def get_analytics_data(is_university=False):
+    try:
+        analytics_objects = Analytics.objects.filter(id__gte=2, is_university=is_university)[1:]
+        if analytics_objects.exists():
+            print('Всё ок!')
+            summary = []
+            prev_time = None
+            for analytics_object in analytics_objects:
+                if prev_time:
+                    time_diff = analytics_object.start_time - prev_time
+                    summary.append(
+                        {'start_time': prev_time, 'end_time': analytics_object.start_time, 'duration': time_diff}
+                    )
+                prev_time = analytics_object.start_time
+
+            durations_timedelta = [entry['duration'] for entry in summary]
+            average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
+            max_duration = max(durations_timedelta)
+            min_duration = min(durations_timedelta)
+
+            return [format_timedelta(average_timedelta),
+                    format_timedelta(max_duration),
+                    format_timedelta(min_duration)]
+        else:
+            print('Почему так?')
+            return ["Н/Д", "Н/Д", "Н/Д"]
+    except Exception as e:
+        print(f'Ошибка в help funcs (get_analytics_data) {str(e)}')
+        return ["Н/Д", "Н/Д", "Н/Д"]
+# ------------------------------------------------------------------
 
 @require_POST
 def create_user(request):
@@ -104,23 +137,8 @@ def reset_queues(request):
     if key == '932468':
         # ------------------------------------------Сводка по сессии----------------------------------------------------
         try:
-            analytics_objects = Analytics.objects.filter(is_university=True)[1:]
-            summary = []
-            prev_time = None
-            for analytics_object in analytics_objects:
-                if prev_time:
-                    time_diff = analytics_object.start_time - prev_time
-                    summary.append(
-                        {'start_time': prev_time, 'end_time': analytics_object.start_time, 'duration': time_diff})
-                prev_time = analytics_object.start_time
-
-
-            durations_timedelta = [entry['duration'] for entry in summary]
-
-            average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
-
-            average_duration_str = str(average_timedelta)
-            print(f'Среднее значение времени: {average_duration_str}')
+            stats_U = get_analytics_data(True)
+            stats_C = get_analytics_data()
 
             # Удаление всех записей из таблицы CustomUser
             CustomUser.objects.all().delete()
@@ -151,9 +169,10 @@ def reset_queues(request):
                     print("Error deleting from sqlite_sequence for main_admin_analytics:", e)
 
             # После сброса перенаправляем пользователя на страницу администратора
-            return render(request, 'main_admin/index.html', {'stats': average_duration_str})
-        except:
-            pass
+            print(f'stats_U: {stats_U}\nstats_C: {stats_C}')
+            return render(request, 'main_admin/index.html', {'stats': stats_U, 'stats_C': stats_C})
+        except Exception as e:
+            print('Ошибка в reset_queues: ', str(e))
 
 
         # Удаление всех записей из таблицы CustomUser
@@ -244,7 +263,8 @@ def call_ten_students_university(request):
 
 
     # После удаления перенаправляем пользователя на страницу администратора
-    return redirect('adminU')
+    # return redirect('adminU')
+    return HttpResponse(status=204)
 
 @require_POST
 def call_ten_students_college(request):

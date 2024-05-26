@@ -22,7 +22,7 @@
                 <th>Статус</th>
             </thead>
             <tbody id="admin_panel">
-
+                <!--Заполнение при помощи JS и REST-->
             </tbody>
         </table>
     </div>
@@ -48,13 +48,31 @@
         </div>
     </div>
 
-{% if stats or error %}
+{% if stats and stats_C or error %}
     <div style="display: block;" id="secModal" class="modal">
 
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div >Статус выполнения: </div>
-            {% if stats %}Среднее время на приём: {{ stats }}{% else %}{{ error }}{% endif %}
+            <div>
+            {% if stats and stats_C %}
+                <p style="text-align: center;">Статистика:</p>
+                <p style="font-size: 18pt">Университет:</p>
+                <ul>
+                    <li style="font-size: 16pt">Среднее время на приём: {{ stats.0 }}</li>
+                    <li style="font-size: 16pt">Максимальное время: {{ stats.1 }}</li>
+                    <li style="font-size: 16pt">Минимальное время: {{ stats.2 }}</li>
+                </ul>
+                <p style="font-size: 18pt">Колледж:</p>
+                <ul>
+                    <li style="font-size: 16pt">Среднее время на приём: {{ stats_C.0 }}</li>
+                    <li style="font-size: 16pt">Максимальное время: {{ stats_C.1 }}</li>
+                    <li style="font-size: 16pt">Минимальное время: {{ stats_C.2 }}</li>
+                </ul>
+            {% else %}
+                Статус выполнения:
+                {{ error }}
+            {% endif %}
+            </div>
         </div>
 
     </div>
