@@ -14,7 +14,7 @@ function updateQueue() {
                     // Функции для обновления на страницах
                     updateTable('#admin_panel', response) // Внутрь admin_panel мы помещаем все записи в БД
                     updateTable('#admin_u', univData)
-//                    updateTable('#admin_c', colData)
+                    updateTable('#admin_c', colData)
 
                 },
                 error: function(xhr, status, error) {
