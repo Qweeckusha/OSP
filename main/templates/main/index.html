@@ -5,27 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'main\css\main_user.css' %}">
+    <script src="{% static 'main/js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'main/js/main.js' %}"></script>
+    <script src="{% static 'main/js/db_update.js' %}"></script>
     <title>Очередь</title>
 </head>
 <body>
-    <script>
-        setTimeout(function() {
-            location.reload();
-        }, 3000);
-    </script>
     <div class="table" id="table_1">
         <table>
             <thead>
                 <th>Университет</th>
             </thead>
-            <tbody>
-                {% for queue in queues %}
-                <tr class="{% if queue.called %}called{% endif %}">
-                    {% if queue.queue_id|slice:":1" == "У" %}
-                    <td>{{ queue.queue_id }}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+            <tbody id="univ">
+                <!--Здесь будет размещена таблица при помощи JS-->
             </tbody>
         </table>
     </div>
@@ -34,14 +26,8 @@
             <thead>
                 <th>Колледж</th>
             </thead>
-            <tbody>
-                {% for queue in queues %}
-                <tr class="{% if queue.called %}called_c{% endif %}">
-                    {% if queue.queue_id|slice:":1" == "К" %}
-                    <td>{{ queue.queue_id }}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
+            <tbody id="col">
+                <!--Здесь будет размещена таблица при помощи JS-->
             </tbody>
         </table>
     </div>
@@ -69,5 +55,6 @@
     <div>
         <img src="{% static 'main_admin/img/VVSU.svg' %}">
     </div>
+    <button id="button">Уведомление</button>
 </body>
 </html>

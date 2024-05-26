@@ -92,6 +92,10 @@ img {
     background-color: #1d6da3a3;
 }
 
+#button {
+    left: 10%;
+}
+
 @media (min-width: 996px) {
     #id-block {
         font-weight: 900;
@@ -179,6 +183,8 @@ img {
         height: 3.32%;
         line-height: center;
     }
+
+
     button {
         position: absolute;
         font-weight: 900;
