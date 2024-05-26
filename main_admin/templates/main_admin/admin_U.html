@@ -28,7 +28,7 @@
             </tbody>
         </table>
     </div>
-     <form method="POST" action="{% url 'call_ten_students_university' %}">
+     <form id="callForm" method="POST" action="{% url 'call_ten_students_university' %}">
          {% csrf_token %}
          <button type="submit">Вызвать 10 человек</button>
     </form>

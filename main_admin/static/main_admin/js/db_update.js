@@ -1,3 +1,27 @@
+$(document).ready(function() {
+    // Обновлять каждые 5 секунд
+    setInterval(updateQueue, 5000);
+    updateQueue(); // Запустить обновление сразу при загрузке страницы
+
+    // Обработчик для отправки формы
+    $('#callForm').on('submit', function(event) {
+        event.preventDefault(); // Предотвратить стандартное поведение отправки формы
+
+        // Отправить AJAX-запрос
+        $.ajax({
+            url: $(this).attr('action'),
+            method: 'POST',
+            data: $(this).serialize(), // Включает данные формы, включая CSRF-токен
+            success: function(response) {
+                updateQueue(); // Обновить данные после успешного выполнения запроса
+            },
+            error: function(xhr, status, error) {
+                console.error('Ошибка при отправке запроса: ', status, error);
+            }
+        });
+    });
+});
+
 function updateQueue() {
             $.ajax({
                 url: "/admin_panel/api/users/",
@@ -43,6 +67,3 @@ function updateTable(tableID, data) {
         $(tableID).append(row);
     });
 }
-        // Обновлять каждые 5 секунд
-        setInterval(updateQueue, 5000);
-        $(document).ready(updateQueue);
