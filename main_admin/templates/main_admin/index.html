@@ -48,25 +48,34 @@
         </div>
     </div>
 
-{% if stats and stats_C or error %}
+{% if stats and stats_U and stats_C or error %}
     <div style="display: block;" id="secModal" class="modal">
 
         <div class="modal-content">
             <span class="close">&times;</span>
             <div>
-            {% if stats and stats_C %}
+            {% if stats and stats_U and stats_C %}
                 <p style="text-align: center;">Статистика:</p>
-                <p style="font-size: 18pt">Университет:</p>
+                <p style="font-size: 16pt">Общая:</p>
                 <ul>
-                    <li style="font-size: 16pt">Среднее время на приём: {{ stats.0 }}</li>
-                    <li style="font-size: 16pt">Максимальное время: {{ stats.1 }}</li>
-                    <li style="font-size: 16pt">Минимальное время: {{ stats.2 }}</li>
+                    <li style="font-size: 14pt">Среднее время на приём: {{ stats.0 }}</li>
+                    <li style="font-size: 14pt">Максимальное время: {{ stats.1 }}</li>
+                    <li style="font-size: 14pt">Минимальное время: {{ stats.2 }}</li>
+                    <li style="font-size: 14pt">Явка: {{ stats.3 }}</li>
                 </ul>
-                <p style="font-size: 18pt">Колледж:</p>
+                <p style="font-size: 16pt">Университет:</p>
                 <ul>
-                    <li style="font-size: 16pt">Среднее время на приём: {{ stats_C.0 }}</li>
-                    <li style="font-size: 16pt">Максимальное время: {{ stats_C.1 }}</li>
-                    <li style="font-size: 16pt">Минимальное время: {{ stats_C.2 }}</li>
+                    <li style="font-size: 14pt">Среднее время на приём: {{ stats_U.0 }}</li>
+                    <li style="font-size: 14pt">Максимальное время: {{ stats_U.1 }}</li>
+                    <li style="font-size: 14pt">Минимальное время: {{ stats_U.2 }}</li>
+                    <li style="font-size: 14pt">Явка: {{ stats_U.3 }}</li>
+                </ul>
+                <p style="font-size: 16pt">Колледж:</p>
+                <ul>
+                    <li style="font-size: 14pt">Среднее время на приём: {{ stats_C.0 }}</li>
+                    <li style="font-size: 14pt">Максимальное время: {{ stats_C.1 }}</li>
+                    <li style="font-size: 14pt">Минимальное время: {{ stats_C.2 }}</li>
+                    <li style="font-size: 14pt">Явка: {{ stats_C.3 }}</li>
                 </ul>
             {% else %}
                 Статус выполнения:

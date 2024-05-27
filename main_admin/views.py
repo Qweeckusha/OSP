@@ -45,9 +45,47 @@ def edit_students(request):
 
 def format_timedelta(td): # Форматирование строки времени в чч:мм:сс
     return str(td).split('.')[0]
+
+def get_allAnalytics():
+    try:
+        visitors = Analytics.objects.get(id=1)
+        analytics_objects_list = [Analytics.objects.filter(id__gte=2, is_university=False), Analytics.objects.filter(id__gte=2, is_university=True)]
+        if analytics_objects_list:
+            print('Всё ок!')
+            summary = []
+            for analytics_objects in analytics_objects_list:
+                prev_time = None
+                for analytics_object in analytics_objects:
+
+                    if prev_time:
+                        time_diff = analytics_object.start_time - prev_time
+                        print(f'{analytics_object.start_time} - {prev_time} = {time_diff}')
+                        summary.append(
+                            {'start_time': prev_time, 'end_time': analytics_object.start_time, 'duration': time_diff}
+                        )
+                    prev_time = analytics_object.start_time
+
+            durations_timedelta = [entry['duration'] for entry in summary]
+            average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
+            max_duration = max(durations_timedelta)
+            min_duration = min(durations_timedelta)
+            counterAll = visitors.college_counter + visitors.university_counter
+
+            return [format_timedelta(average_timedelta),
+                    format_timedelta(max_duration),
+                    format_timedelta(min_duration),
+                    str(counterAll)]
+        else:
+            print('Почему так?')
+            return ["Н/Д", "Н/Д", "Н/Д", "Н/Д"]
+    except Exception as e:
+        print(f'Ошибка в get_allAnalytics() {str(e)}')
+        return ["Ошибка", "Ошибка", "Ошибка", "Ошибка"]
+
 def get_analytics_data(is_university=False):
     try:
-        analytics_objects = Analytics.objects.filter(id__gte=2, is_university=is_university)[1:]
+        Visitors = Analytics.objects.get(id=1)
+        analytics_objects = Analytics.objects.filter(id__gte=2, is_university=is_university)
         if analytics_objects.exists():
             print('Всё ок!')
             summary = []
@@ -64,16 +102,21 @@ def get_analytics_data(is_university=False):
             average_timedelta = sum(durations_timedelta, timedelta(0)) / len(durations_timedelta)
             max_duration = max(durations_timedelta)
             min_duration = min(durations_timedelta)
+            if is_university:
+                studs_counter = Visitors.university_counter
+            else:
+                studs_counter = Visitors.college_counter
 
             return [format_timedelta(average_timedelta),
                     format_timedelta(max_duration),
-                    format_timedelta(min_duration)]
+                    format_timedelta(min_duration),
+                    str(studs_counter)]
         else:
             print('Почему так?')
-            return ["Н/Д", "Н/Д", "Н/Д"]
+            return ["Н/Д", "Н/Д", "Н/Д", "Н/Д"]
     except Exception as e:
         print(f'Ошибка в help funcs (get_analytics_data) {str(e)}')
-        return ["Н/Д", "Н/Д", "Н/Д"]
+        return ["Ошибка", "Ошибка", "Ошибка", "Ошибка"]
 # ------------------------------------------------------------------
 
 @require_POST
@@ -137,6 +180,7 @@ def reset_queues(request):
     if key == '932468':
         # ------------------------------------------Сводка по сессии----------------------------------------------------
         try:
+            stats = get_allAnalytics()
             stats_U = get_analytics_data(True)
             stats_C = get_analytics_data()
 
@@ -160,17 +204,17 @@ def reset_queues(request):
             from django.db import connection
             with connection.cursor() as cursor:
                 try:
-                    cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_customuser'])
+                    cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_customuser']) # клоака ---v
                 except Exception as e:
                     print("Error deleting from sqlite_sequence for main_admin_customuser:", e)
                 try:
                     cursor.execute("DELETE FROM sqlite_sequence WHERE name=?", ['main_admin_analytics'])
                 except Exception as e:
-                    print("Error deleting from sqlite_sequence for main_admin_analytics:", e)
+                    print("Error deleting from sqlite_sequence for main_admin_analytics:", e)             # ----------^
 
             # После сброса перенаправляем пользователя на страницу администратора
-            print(f'stats_U: {stats_U}\nstats_C: {stats_C}')
-            return render(request, 'main_admin/index.html', {'stats': stats_U, 'stats_C': stats_C})
+            # print(f'stats_U: {stats_U}\nstats_C: {stats_C}')
+            return render(request, 'main_admin/index.html', {'stats': stats, 'stats_U': stats_U, 'stats_C': stats_C})
         except Exception as e:
             print('Ошибка в reset_queues: ', str(e))
 
