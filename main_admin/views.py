@@ -225,7 +225,7 @@ def reset_queues(request):
 
         admins = AdminUser.objects.all()
         for admin in admins:
-            if admin.username not in ['collector', 'adminU', 'adminC']:
+            if admin.username not in ['collector', 'adminU', 'adminC', 'television']:
                 admin.delete()
 
         # Сброс счетчика автоинкремента (если используется база данных, поддерживающая автоинкремент)

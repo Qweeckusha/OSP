@@ -1,0 +1,37 @@
+<!--main\TV.html-->
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'main\css\main_user.css' %}">
+    <script src="{% static 'main/js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'main/js/db_update.js' %}"></script>
+    <title>Очередь</title>
+</head>
+<body>
+    <div class="table" id="table_1">
+        <table>
+            <thead>
+                <th>Университет</th>
+            </thead>
+            <tbody id="univ">
+                <!--Здесь будет размещена таблица при помощи JS-->
+            </tbody>
+        </table>
+    </div>
+    <div class="table" id="table_2">
+        <table>
+            <thead>
+                <th>Колледж</th>
+            </thead>
+            <tbody id="col">
+                <!--Здесь будет размещена таблица при помощи JS-->
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <img src="{% static 'main_admin/img/VVSU.svg' %}">
+    </div>
+</body>
+</html>
