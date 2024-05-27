@@ -13,7 +13,7 @@ def main_user_page(request):
 
 @never_cache
 @login_required
-@user_passes_test(lambda u: u.is_staff)
+# @user_passes_test(lambda u: u.is_staff)
 def tv_user(request):
     queues = CustomUser.objects.all()
     user = request.user
