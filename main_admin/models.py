@@ -5,11 +5,6 @@ from django.utils import timezone
 
 from .managers import CustomUserManager, AdminUserManager
 
-
-# class Counter(models.Model):
-#     university_counter = models.IntegerField(default=0)
-#     college_counter = models.IntegerField(default=0)
-
 class CustomUser(AbstractUser):
     # Добавьте поля для ФИО
     username = None

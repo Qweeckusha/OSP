@@ -87,7 +87,6 @@ def get_analytics_data(is_university=False):
         Visitors = Analytics.objects.get(id=1)
         analytics_objects = Analytics.objects.filter(id__gte=2, is_university=is_university)
         if analytics_objects.exists():
-            print('Всё ок!')
             summary = []
             prev_time = None
             for analytics_object in analytics_objects:
@@ -190,7 +189,7 @@ def reset_queues(request):
 
             admins = AdminUser.objects.all()
             for admin in admins:
-                if admin.username not in ['collector', 'adminU', 'adminC']:
+                if admin.username not in ['collector', 'adminU', 'adminC', 'television']:
                     admin.delete()
 
             # Сброс счетчика автоинкремента (если используется база данных, поддерживающая автоинкремент)
@@ -324,7 +323,7 @@ def call_ten_students_college(request):
     Analytics.objects.create(is_university=False)
 
     # После удаления перенаправляем пользователя на страницу администратора
-    return redirect('adminC')
+    return HttpResponse(status=204)
 
 @never_cache
 def login_users(request):
@@ -361,6 +360,10 @@ def login_admins(request):
                     return redirect('adminU')
                 elif username == 'adminC':
                     return redirect('adminC')
+                elif username == 'television':
+                    return redirect('tv')
+                else:
+                    return HttpResponse('Не стоило этого делать... Зачем вам ещё один администратор???? Аааааа?')
             else:
                 # Отображение сообщения об ошибке, если пользователь не найден
                 error_message = "Неверные учетные данные. Пожалуйста, попробуйте еще раз."

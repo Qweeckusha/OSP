@@ -42,7 +42,7 @@
             <div id="submit">Введите код подтверждения</div>
             <form method="POST" action="{% url 'reset_queues' %}">
                 {% csrf_token %}
-                <input id="enterCode" type="text" name="key" placeholder="Код">
+                <input id="enterCode" type="password" name="key" placeholder="Код">
                 <button type="submit" id="apply"><i class="fa-solid fa-check"></i> Принять</button>
             </form>
         </div>
