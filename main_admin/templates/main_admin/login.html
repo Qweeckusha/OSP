@@ -2,14 +2,14 @@
 <html>
 <head>
     <title>Вход</title>
-
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'main_admin\css\login.css' %}">
 </head>
 <body>
-<!--    <script src="{% static 'main_admin/js/switch_login.js' %}"></script>-->
     <div id="logo">
         <img src="{% static 'main_admin/img/VVSU.svg' %}" alt="vvsu">
     </div>
@@ -33,7 +33,5 @@
             <a href="{% url 'login_admins' %}"><div id="admin">Сотрудникам</div></a>
         </div>
     </form>
-
-
 </body>
 </html>

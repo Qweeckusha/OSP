@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static 'main_admin\css\admin_U.css' %}">
     <script src="{% static 'main_admin\js\jquery-3.7.1.min.js' %}"></script>
     <script src="{% static 'main_admin/js/db_update.js' %}"></script>
+    <script src="{% static 'main_admin/js/send_notification.js' %}"></script>
     <title>Admin (University)</title>
 </head>
 <body>
@@ -30,7 +31,7 @@
     </div>
      <form id="callForm" method="POST" action="{% url 'call_ten_students_university' %}">
          {% csrf_token %}
-         <button type="submit">Вызвать 10 человек</button>
+         <button id="call_u" type="submit">Вызвать 10 человек</button>
     </form>
     <div id="logo">
         <img src="{% static 'main_admin/img/VVSU.svg' %}" alt="vvsu">

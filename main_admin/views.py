@@ -1,4 +1,5 @@
 from datetime import timedelta
+import base64
 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
@@ -15,6 +16,7 @@ from .models import CustomUser, Analytics, AdminUser
 from time import *
 
 from .serializers import CustomUserSerializer
+import config
 
 
 # ---------------------- renders ----------------------
@@ -176,7 +178,7 @@ def create_user(request):
 @require_POST
 def reset_queues(request):
     key = request.POST.get('key')
-    if key == '932468':
+    if key == config.key_for_reset:
         # ------------------------------------------Сводка по сессии----------------------------------------------------
         try:
             stats = get_allAnalytics()
@@ -285,7 +287,6 @@ def delete_students(request):
         return render(request, 'main_admin/edit.html', {'error': 'Студент не найден.'})
 
     student.delete()
-
     return redirect('admin_page')
 
 @require_POST
@@ -304,10 +305,13 @@ def call_ten_students_university(request):
         stud.save()
     Analytics.objects.create()
 
+    # return HttpResponse(status=204)
 
-    # После удаления перенаправляем пользователя на страницу администратора
-    # return redirect('adminU')
-    return HttpResponse(status=204)
+    # Список вызванных студентов
+    called_students_data = [{'queue_id': stud.queue_id, 'last_name': stud.last_name} for stud in studs_to_call]
+
+    # Возвращаем данные вызванных студентов
+    return JsonResponse({'called_students': called_students_data})
 
 @require_POST
 def call_ten_students_college(request):
@@ -325,6 +329,7 @@ def call_ten_students_college(request):
     # После удаления перенаправляем пользователя на страницу администратора
     return HttpResponse(status=204)
 
+
 @never_cache
 def login_users(request):
     if request.method == 'POST':
@@ -335,7 +340,12 @@ def login_users(request):
             user = QueueAuthBackend().authenticate(request, queue_id=queue_id)
             if user is not None:
                 login(request, user, backend='main_admin.backends.QueueAuthBackend')
-                return redirect('main')  # Перенаправление на главную страницу после успешного входа
+                response = redirect('main')  # Перенаправление на главную страницу после успешного входа
+
+                # Кодируем значение queue_id в base64
+                encoded_queue_id = base64.b64encode(user.queue_id.encode('utf-8')).decode('utf-8')
+                response.set_cookie('queue_id', encoded_queue_id)  # Установка закодированного queue_id в cookie
+                return response
             else:
                 # Отображение сообщения об ошибке, если пользователь не найден
                 error_message = "Неверные учетные данные. Пожалуйста, попробуйте еще раз."
@@ -379,7 +389,7 @@ def create_admin(request):
             password = form.cleaned_data['password']
             key = form.cleaned_data['key']
 
-            if key == 'gT9uJ5sNpE4q':
+            if key == config.reg_key:
                 AdminUser.objects.create_adminuser(username=username, password=password)
                 return redirect('login_admins')
             else:
