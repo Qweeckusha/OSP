@@ -16,7 +16,7 @@ from .models import CustomUser, Analytics, AdminUser
 from time import *
 
 from .serializers import CustomUserSerializer
-import config
+import os
 
 
 # ---------------------- renders ----------------------
@@ -178,7 +178,7 @@ def create_user(request):
 @require_POST
 def reset_queues(request):
     key = request.POST.get('key')
-    if key == config.key_for_reset:
+    if key == os.environ.get('RESET_DB_KEY'):
         # ------------------------------------------Сводка по сессии----------------------------------------------------
         try:
             stats = get_allAnalytics()
@@ -389,7 +389,7 @@ def create_admin(request):
             password = form.cleaned_data['password']
             key = form.cleaned_data['key']
 
-            if key == config.reg_key:
+            if key == os.environ.get('SECRET_ADMIN_KEY'):
                 AdminUser.objects.create_adminuser(username=username, password=password)
                 return redirect('login_admins')
             else:
